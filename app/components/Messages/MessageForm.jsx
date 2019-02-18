@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class MessageForm extends Component {
 	render() {
 		return (
-			<div>
+			<div className="mt-4">
 				<form onSubmit={this.onSubmit.bind(this)}>
 					<input type="text" className="form-control" ref="text" placeholder="Type a message..." />
 				</form>
