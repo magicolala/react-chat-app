@@ -10,10 +10,12 @@ class App extends Component {
 		super(props);
 		this.state = {
 			status: 'disconnected',
-			messages: [{
-				timeStamp: Date.now(),
-				text: "Welcome to SockChat"
-			}],
+			messages: [
+				{
+					timeStamp: Date.now(),
+					text: 'Welcome to SockChat'
+				}
+			],
 			users: [],
 			user: ''
 		};
@@ -22,28 +24,42 @@ class App extends Component {
 	componentWillMount() {
 		this.socket = io('http://localhost:3000');
 		this.socket.on('connect', this.connect.bind(this));
+		this.socket.on('disconnect', this.disconnect.bind(this));
 		this.socket.on('messageAdded', this.onMessageAdded.bind(this));
+		this.socket.on('userJoined', this.onUserJoined.bind(this));
 	}
 
 	connect() {
-		this.setState({status: 'connected'});
-		console.log('Connected: ' + this.socket.id);
+		this.setState({ status: 'connected' });
+		console.log(`Connected: ${this.socket.id}`);
+	}
+
+	disconnect(users) {
+		console.log(users.length);
+		this.setState({ users });
+		this.setState({ status: 'disconnected' });
 	}
 
 	onMessageAdded(message) {
-		this.setState({messages: this.state.messages.concat(message)});
+		this.setState({ messages: this.state.messages.concat(message) });
 	}
 
-	disconnect() {
-		this.setState({status: 'disconnected'});
+	onUserJoined(users) {
+		this.setState({ users });
 	}
 
 	emit(eventName, payload) {
 		this.socket.emit(eventName, payload);
 	}
 
+	setUser(user) {
+		this.setState({ user });
+	}
+
 	render() {
-		console.log(this.state.messages);   
+		if (this.state.user == '') {
+			return <UserForm emit={this.emit.bind(this)} setUser={this.setUser.bind(this)} />;
+		}
 		return (
 			<div className="row">
 				<div className="col-md-4">
