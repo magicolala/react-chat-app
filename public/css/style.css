@@ -6,3 +6,25 @@ body {
   margin-top: 30px;
 }
 
+.message-text-me {
+  background-color: blueviolet;
+  color: #fff;
+  border-radius: 50px;
+  padding: 5px 15px;
+}
+
+.message-text-other {
+  background-color: rgb(197, 197, 197);
+  color: #000;
+  border-radius: 50px;
+  padding: 5px 15px;
+  display: inline;
+}
+
+.message-user {
+  font-weight: bolder !important;
+}
+
+.message-time {
+  margin-left: 16px;  
+}

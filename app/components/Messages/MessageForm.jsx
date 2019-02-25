@@ -14,11 +14,15 @@ class MessageForm extends Component {
 	onSubmit(e) {
 		e.preventDefault();
 
-		this.props.emit('messageAdded', {
-			timeStamp: Date.now(),
-			text: this.refs.text.value.trim(),
-			user: this.props.user.name
-		});
+		const text = this.refs.text.value;
+
+		if (text !== '') {
+			this.props.emit('messageAdded', {
+				timeStamp: Date.now(),
+				text: text.trim(),
+				user: this.props.user.name
+			});
+		}
 
 		// Clear Form
 		this.refs.text.value = '';
